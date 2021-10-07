@@ -3,16 +3,20 @@ import matplotlib.pyplot as plt
 
 from .mcs import MCS
 
+
 class PDE(MCS):
-    """
-    PDEs simulation. Override to customize.
+    """PDEs simulation.
+
+    Override this class to customize.
+
     Attributes:
         max_step: The max step.
         dim: The number of variables.
         dt: The time step.
         dh: Spatial resolution.
         size: Size of grid.
-        f: An array of shape (max_step, size, size, dim) representing the states.
+        f: An array of shape (max_step, size, size, dim) representing the
+        states.
         step: The current step.
     """
     def __init__(self, max_step, dim, dt, dh, size):
@@ -24,35 +28,37 @@ class PDE(MCS):
         self.f = np.zeros((max_step, size, size, dim))
 
     def initialize(self):
-        """
-        Sets up the initial conditions.
-        """
+        """Sets up the initial conditions."""
         x = y = np.arange(0, self.dh * self.size, self.dh)
         self.xv, self.yv = np.meshgrid(x, y)
         np.random.seed(42)
-        self.f[0, ..., 0] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
-        self.f[0, ..., 1] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
+        self.f[0, ..., 0] = 1 + np.random.uniform(
+            -0.01, 0.01, (self.size, self.size))
+        self.f[0, ..., 1] = 1 + np.random.uniform(
+            -0.01, 0.01, (self.size, self.size))
 
     def update(self, F):
-        """
-        Updates the states in the next step.
+        """Updates the states in the next step.
+
         Args:
-            F: A state transition function corresponding to df/dt = F(f,...,x,y,t).
+            F: A state transition function corresponding to
+            df/dt = F(f,...,x,y,t).
         """
         config = self.f[self.step]
         self.step += 1
         self.f[self.step] = config + F(config)*self.dt
-    
+
     @staticmethod
     def turing(a, b, c, d, h, k, Du, Dv, dh):
+        """Reaction-diffusion equations:
+
+        .. math::
+            \partial u/\partial t = a(u-h) + b(v-k) + D_u \Delta u \\
+            \partial v/\partial t = c(u-h) + d(v-k) + D_v \Delta v.
         """
-        Reaction-diffusion equations:
-        \partial u/\partial t = a(u-h) + b(v-k) + D_u \Delta u,
-        \partial v/\partial t = c(u-h) + d(v-k) + D_v \Delta v.
-        """
-        def dfdt(configs):
-            lap = PDE._laplacian(configs, dh)
-            u, v = np.moveaxis(configs, -1, 0)
+        def dfdt(config):
+            lap = PDE._laplacian(config, dh)
+            u, v = np.moveaxis(config, -1, 0)
             delta_u, delta_v = np.moveaxis(lap, -1, 0)
             du = (a*(u-h) + b*(v-k) + Du*delta_u)
             dv = (c*(u-h) + d*(v-k) + Dv*delta_v)
@@ -69,8 +75,8 @@ class PDE(MCS):
         return (u_r+u_l+u_u+u_d-4*u) / (dh**2)
 
     def visualize(self, step=-1, indices=None):
-        """
-        Visualizes the states of the system using heatmap.
+        """Visualizes the states of the system using heatmap.
+
         Args:
             step: The step to plot.
             states: A list of indices of the states to plot.

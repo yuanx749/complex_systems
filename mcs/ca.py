@@ -3,10 +3,13 @@ import matplotlib.pyplot as plt
 
 from .mcs import MCS
 
+
 class CA(MCS):
-    """
-    Cellular automata simulation. Override to customize conﬁguration 
-    and state-transition function
+    """Cellular automata simulation.
+
+    Override this class to customize conﬁguration and
+    state-transition function.
+
     Attributes:
         max_step: The max step.
         size_x: Number of cells in x dimension.
@@ -27,15 +30,13 @@ class CA(MCS):
             self.s = np.zeros((max_step, size_y, size_x))
 
     def initialize(self):
-        """
-        Sets up the initial conﬁguration.
-        """
+        """Sets up the initial conﬁguration."""
         np.random.seed(self.seed)
         self.s[0] = np.random.randint(2, size=self.s[0].shape)
 
     def update(self, F):
-        """
-        Updates the states in the next step.
+        """Updates the states in the next step.
+
         Args:
             F: A state transition function which returns an array.
         """
@@ -75,9 +76,9 @@ class CA(MCS):
         return config_next
 
     def visualize(self, step=-1):
-        """
-        Visualizes the states of the system using an image of
+        """Visualizes the states of the system using an image of
         shape (step, size_x) or (size_y, size_x).
+
         Args:
             step: The step to plot.
         Returns:

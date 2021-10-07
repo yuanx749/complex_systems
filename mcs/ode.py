@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 
 from .mcs import MCS
 
+
 class ODE(MCS):
-    """
-    ODEs simulation.
+    """ODEs simulation.
+
     Attributes:
         max_step: The max step.
         dim: The number of variables.
@@ -22,8 +23,8 @@ class ODE(MCS):
         self.t = np.zeros(max_step)
 
     def initialize(self, x0):
-        """
-        Sets up the initial values for the state variables.
+        """Sets up the initial values for the state variables.
+
         Args:
             x0: A list of initial states.
         """
@@ -31,8 +32,8 @@ class ODE(MCS):
         self.t[0] = 0
 
     def update(self, f):
-        """
-        Updates the states in the next step.
+        """Updates the states in the next step.
+
         Args:
             f: A function, dx/dt = f(x).
         """
@@ -44,6 +45,7 @@ class ODE(MCS):
 
     @staticmethod
     def lv(a, b, c, d):
+        """Returns Lotka–Volterra equations."""
         def dxdt(states):
             x, y = states
             dx = a*x - b*x*y
@@ -52,8 +54,8 @@ class ODE(MCS):
         return dxdt
 
     def visualize(self, step=-1, indices=None):
-        """
-        Visualizes the time series of the system.
+        """Visualizes the time series of the system.
+
         Args:
             step: The step to plot.
             states: A list of indices of the states to plot.

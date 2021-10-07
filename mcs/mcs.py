@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
+
 class MCS(ABC):
-    """
-    Complex system simulation.
+    """Complex system simulation.
+
     Attributes:
         max_step: The max step.
         step: The current step.
@@ -25,8 +26,8 @@ class MCS(ABC):
         pass
 
     def simulate(self, stop_step=None, **kwargs):
-        """
-        Simulates the system till stop_step.
+        """Simulates the system till stop_step.
+
         Args:
             stop_step: If None, stops at max_step.
             kwagrs: Parameters passed to update().

@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 
 from .mcs import MCS
 
+
 class DE(MCS):
-    """
-    Difference equations simulation.
+    """Difference equations simulation.
+
     Attributes:
         max_step: The max step.
         dim: The number of variables.
@@ -18,16 +19,16 @@ class DE(MCS):
         self.x = np.zeros((max_step, dim))
 
     def initialize(self, x0):
-        """
-        Sets up the initial values for the state variables.
+        """Sets up the initial values for the state variables.
+
         Args:
             x0: A list of initial states.
         """
         self.x[0] = x0
 
     def update(self, f):
-        """
-        Updates the states in the next step.
+        """Updates the states in the next step.
+
         Args:
             f: A function, x_t = f(x_{t-1}).
         """
@@ -36,8 +37,8 @@ class DE(MCS):
         self.x[self.step] = np.array(f(x))
 
     def visualize(self, step=-1, indices=None):
-        """
-        Visualizes the series of states of the system.
+        """Visualizes the series of states of the system.
+
         Args:
             step: The step to plot.
             states: A list of indices of the states to plot.
