@@ -10,4 +10,4 @@ Modeling and simulation of complex systems:
 pip install -r requirements.txt
 ```
 ## demo
-see [demo.ipynb](demo.ipynb)
+see [demo.ipynb](demo.ipynb) or [demo.md](demo.md)
