@@ -9,5 +9,18 @@ Modeling and simulation of complex systems:
 ```bash
 pip install -r requirements.txt
 ```
+Alternatively, using `setuptools`, run in the cloned directory:
+```bash
+python -m pip install --upgrade pip
+pip install .
+```
+Install in development mode:
+```bash
+pip install -e .[dev]
+```
+Uninstall:
+```bash
+pip uninstall modeling-complex-systems
+```
 ## demo
-see [demo.ipynb](demo.ipynb) or [demo.md](demo.md)
+See [demo.ipynb](demo.ipynb) or [demo.md](demo.md).
