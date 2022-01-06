@@ -5,6 +5,9 @@ Modeling and simulation of complex systems:
 - Cellular automaton
 - PDE
 - Dynamical network
+
+## demo
+See [demo.ipynb](demo.ipynb) or [demo.md](demo.md).
 ## install
 ```bash
 pip install -r requirements.txt
@@ -22,5 +25,3 @@ Uninstall:
 ```bash
 pip uninstall modeling-complex-systems
 ```
-## demo
-See [demo.ipynb](demo.ipynb) or [demo.md](demo.md).
