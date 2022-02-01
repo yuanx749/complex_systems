@@ -34,7 +34,7 @@ class CA(MCS):
         np.random.seed(self.seed)
         self.s[0] = np.random.randint(2, size=self.s[0].shape)
 
-    def update(self, F):
+    def update(self, *, F):
         """Updates the states in the next step.
 
         Args:
@@ -75,7 +75,7 @@ class CA(MCS):
                 config_next[y, x] = state
         return config_next
 
-    def visualize(self, step=-1):
+    def visualize(self, *, step=-1):
         """Visualizes the states of the system using an image of
         shape (step, size_x) or (size_y, size_x).
 

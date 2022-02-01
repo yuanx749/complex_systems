@@ -16,7 +16,7 @@ $dy/dt = dxy - cy$
 ```python
 
 ode = ODE(max_step=10000, dim=2, dt=0.01)
-ode.initialize([10, 10])
+ode.initialize(x0=[10, 10])
 ode.simulate(f=ode.lv(a=1.1, b=0.4, c=0.4, d=0.1))
 fig = ode.visualize()
 ax = fig.axes[0]
@@ -87,7 +87,7 @@ Stable trajetory: $b - a\lambda_2 < 0$, where $a\ge 0$ and $\lambda_2$ is the se
 net = Net(max_step=2000)
 net.initialize()
 net.simulate(a=2, b=0.9, dt=0.01)
-fig = net.visualize(0)
+fig = net.visualize(step=0)
 fig = net.visualize()
 plt.show()
 

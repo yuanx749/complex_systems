@@ -14,7 +14,7 @@ class MCS(ABC):
         self.step = 0
 
     @abstractmethod
-    def initialize(self, x0):
+    def initialize(self, **kwargs):
         pass
 
     @abstractmethod
@@ -22,7 +22,7 @@ class MCS(ABC):
         pass
 
     @abstractmethod
-    def visualize(self):
+    def visualize(self, **kwargs):
         pass
 
     def simulate(self, stop_step=None, **kwargs):

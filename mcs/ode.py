@@ -22,7 +22,7 @@ class ODE(MCS):
         self.x = np.zeros((max_step, dim))
         self.t = np.zeros(max_step)
 
-    def initialize(self, x0):
+    def initialize(self, *, x0):
         """Sets up the initial values for the state variables.
 
         Args:
@@ -31,7 +31,7 @@ class ODE(MCS):
         self.x[0] = x0
         self.t[0] = 0
 
-    def update(self, f):
+    def update(self, *, f):
         """Updates the states in the next step.
 
         Args:
@@ -45,7 +45,7 @@ class ODE(MCS):
 
     @staticmethod
     def lv(a, b, c, d):
-        """Returns Lotka–Volterra equations."""
+        """Returns Lotka-Volterra equations."""
         def dxdt(states):
             x, y = states
             dx = a*x - b*x*y
@@ -53,12 +53,12 @@ class ODE(MCS):
             return np.array([dx, dy])
         return dxdt
 
-    def visualize(self, step=-1, indices=None):
+    def visualize(self, *, step=-1, indices=None):
         """Visualizes the time series of the system.
 
         Args:
             step: The step to plot.
-            states: A list of indices of the states to plot.
+            indices: A list of indices of the states to plot.
             If None, plot all states.
         Returns:
             A matplotlib.figure.Figure object.

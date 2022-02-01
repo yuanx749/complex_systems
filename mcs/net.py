@@ -28,7 +28,14 @@ class Net(MCS):
 
     def update(self, **kwargs):
         """Updates the states in the next step."""
-        a, b, dt = kwargs['a'], kwargs['b'], kwargs['dt']
+        self.coupled_oscillators(**kwargs)
+
+    def coupled_oscillators(self, a, b, dt):
+        """Linearly coupled dynamical nodes:
+
+        .. math::
+            d\theta_i/dt = b\theta_i + a\sum_{j\in N_i}(\theta_j-\theta_i).
+        """
         g = self.graphs[-1]
         g_next = g.copy()
         for i in g.nodes:
@@ -38,7 +45,7 @@ class Net(MCS):
         self.graphs.append(g_next)
         self.step += 1
 
-    def visualize(self, step=-1):
+    def visualize(self, *, step=-1):
         """Visualizes the states of the network.
 
         Args:

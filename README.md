@@ -1,4 +1,8 @@
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/yuanx749/complex_systems.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/yuanx749/complex_systems/context:python)
+
 # complex_systems
+This package is mainly for educational purpose. Instead of writing scattered and redundant scripts, it is implemented using OOP, thus enabling a coherent scheme and easy extension to incorporate more models.
+
 Modeling and simulation of complex systems:
 - Difference equation
 - ODE
@@ -7,7 +11,8 @@ Modeling and simulation of complex systems:
 - Dynamical network
 
 ## demo
-See [demo.ipynb](demo.ipynb) or [demo.md](demo.md).
+See [demo.md](demo.md) or run `jupyter notebook demo.ipynb`.
+
 ## install
 ```bash
 pip install -r requirements.txt

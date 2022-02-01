@@ -18,7 +18,7 @@ class DE(MCS):
         self.dim = dim
         self.x = np.zeros((max_step, dim))
 
-    def initialize(self, x0):
+    def initialize(self, *, x0):
         """Sets up the initial values for the state variables.
 
         Args:
@@ -26,7 +26,7 @@ class DE(MCS):
         """
         self.x[0] = x0
 
-    def update(self, f):
+    def update(self, *, f):
         """Updates the states in the next step.
 
         Args:
@@ -36,12 +36,12 @@ class DE(MCS):
         self.step += 1
         self.x[self.step] = np.array(f(x))
 
-    def visualize(self, step=-1, indices=None):
+    def visualize(self, *, step=-1, indices=None):
         """Visualizes the series of states of the system.
 
         Args:
             step: The step to plot.
-            states: A list of indices of the states to plot.
+            indices: A list of indices of the states to plot.
             If None, plot all states.
         Returns:
             A matplotlib.figure.Figure object.

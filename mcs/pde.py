@@ -37,7 +37,7 @@ class PDE(MCS):
         self.f[0, ..., 1] = 1 + np.random.uniform(
             -0.01, 0.01, (self.size, self.size))
 
-    def update(self, F):
+    def update(self, *, F):
         """Updates the states in the next step.
 
         Args:
@@ -74,12 +74,12 @@ class PDE(MCS):
         u_d = np.roll(u, 1, axis=0)
         return (u_r+u_l+u_u+u_d-4*u) / (dh**2)
 
-    def visualize(self, step=-1, indices=None):
+    def visualize(self, *, step=-1, indices=None):
         """Visualizes the states of the system using heatmap.
 
         Args:
             step: The step to plot.
-            states: A list of indices of the states to plot.
+            indices: A list of indices of the states to plot.
             If None, plot all states.
         Returns:
             A list of matplotlib.figure.Figure objects.
