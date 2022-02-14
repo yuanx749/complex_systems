@@ -1,4 +1,5 @@
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/yuanx749/complex_systems.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/yuanx749/complex_systems/context:python)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6ef4b6837545f2bc2e22/maintainability)](https://codeclimate.com/github/yuanx749/complex_systems/maintainability)
 
 # complex_systems
 This package is mainly for educational purpose. Instead of writing scattered and redundant scripts, it is implemented using OOP, thus enabling a coherent scheme and easy extension to incorporate more models.

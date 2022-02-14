@@ -1,5 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy import signal
 
 from .mcs import MCS
 
@@ -59,20 +60,11 @@ class CA(MCS):
     @staticmethod
     def game_of_life(config):
         assert config.ndim == 2
-        size_y, size_x = config.shape
-        config_next = np.zeros(config.shape)
-        for y in range(size_y):
-            for x in range(size_x):
-                state = config[y, x]
-                num_alive = 0
-                for dx in [-1, 0, 1]:
-                    for dy in [-1, 0, 1]:
-                        num_alive += config[(y+dy) % size_y, (x+dx) % size_x]
-                if state == 0 and num_alive == 3:
-                    state = 1
-                elif state == 1 and (num_alive < 3 or num_alive > 4):
-                    state = 0
-                config_next[y, x] = state
+        config_next = np.copy(config)
+        num_alive = signal.convolve2d(
+            config, np.ones((3, 3)), mode='same', boundary='wrap')
+        config_next[(config == 0) & (num_alive == 3)] = 1
+        config_next[(config == 1) & ((num_alive < 3) | (num_alive > 4))] = 0
         return config_next
 
     def visualize(self, *, step=-1):
