@@ -12,7 +12,9 @@ Modeling and simulation of complex systems:
 - Dynamical network
 
 ## demo
-See [demo.md](demo.md) or run `jupyter notebook demo.ipynb`.
+Navigate to [Streamlit](https://share.streamlit.io/yuanx749/complex_systems/main/demo_st.py) to play with a demo.
+
+Alternatively, see [demo.md](demo.md) or run `jupyter notebook demo.ipynb`.
 
 ## install
 ```bash
