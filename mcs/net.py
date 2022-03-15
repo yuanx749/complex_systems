@@ -14,6 +14,7 @@ class Net(MCS):
         max_step: The max step.
         graphs: A list of networkx.Graph objects.
     """
+
     def __init__(self, max_step):
         super().__init__(max_step)
         self.graphs = []
@@ -23,7 +24,7 @@ class Net(MCS):
         g = nx.karate_club_graph()
         np.random.seed(42)
         for i in g.nodes:
-            g.nodes[i]['state'] = np.random.random()
+            g.nodes[i]["state"] = np.random.random()
         self.graphs.append(g)
 
     def update(self, **kwargs):
@@ -39,9 +40,9 @@ class Net(MCS):
         g = self.graphs[-1]
         g_next = g.copy()
         for i in g.nodes:
-            theta_i = g.nodes[i]['state']
-            sum_ni = sum([g.nodes[j]['state']-theta_i for j in g.neighbors(i)])
-            g_next.nodes[i]['state'] = theta_i + (b*theta_i + a*sum_ni)*dt
+            theta_i = g.nodes[i]["state"]
+            sum_ni = sum([g.nodes[j]["state"] - theta_i for j in g.neighbors(i)])
+            g_next.nodes[i]["state"] = theta_i + (b * theta_i + a * sum_ni) * dt
         self.graphs.append(g_next)
         self.step += 1
 
@@ -56,7 +57,12 @@ class Net(MCS):
         g = self.graphs[step]
         fig, ax = plt.subplots()
         nx.draw(
-            g, pos=nx.spring_layout(g, seed=42), ax=ax,
-            node_color=[np.sin(g.nodes[i]['state']) for i in g.nodes],
-            cmap=plt.cm.hsv, vmin=-1, vmax=1)
+            g,
+            pos=nx.spring_layout(g, seed=42),
+            ax=ax,
+            node_color=[np.sin(g.nodes[i]["state"]) for i in g.nodes],
+            cmap=plt.cm.hsv,
+            vmin=-1,
+            vmax=1,
+        )
         return fig

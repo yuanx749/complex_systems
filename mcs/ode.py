@@ -15,6 +15,7 @@ class ODE(MCS):
         t: An array of length max_step representing time.
         step: The current step.
     """
+
     def __init__(self, max_step, dim, dt):
         super().__init__(max_step)
         self.dim = dim
@@ -40,17 +41,19 @@ class ODE(MCS):
         x = self.x[self.step]
         dxdt = f(x)
         self.step += 1
-        self.x[self.step] = x + dxdt*self.dt
+        self.x[self.step] = x + dxdt * self.dt
         self.t[self.step] = self.t[self.step - 1] + self.dt
 
     @staticmethod
     def lv(a, b, c, d):
         """Returns Lotka-Volterra equations."""
+
         def dxdt(states):
             x, y = states
-            dx = a*x - b*x*y
-            dy = d*x*y - c*y
+            dx = a * x - b * x * y
+            dy = d * x * y - c * y
             return np.array([dx, dy])
+
         return dxdt
 
     def visualize(self, *, step=-1, indices=None):

@@ -8,6 +8,7 @@ class MCS(ABC):
         max_step: The max step.
         step: The current step.
     """
+
     @abstractmethod
     def __init__(self, max_step):
         self.max_step = max_step

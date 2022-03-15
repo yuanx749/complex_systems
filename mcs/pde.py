@@ -19,6 +19,7 @@ class PDE(MCS):
         states.
         step: The current step.
     """
+
     def __init__(self, max_step, dim, dt, dh, size):
         super().__init__(max_step)
         self.dim = dim
@@ -32,10 +33,8 @@ class PDE(MCS):
         x = y = np.arange(0, self.dh * self.size, self.dh)
         self.xv, self.yv = np.meshgrid(x, y)
         np.random.seed(42)
-        self.f[0, ..., 0] = 1 + np.random.uniform(
-            -0.01, 0.01, (self.size, self.size))
-        self.f[0, ..., 1] = 1 + np.random.uniform(
-            -0.01, 0.01, (self.size, self.size))
+        self.f[0, ..., 0] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
+        self.f[0, ..., 1] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
 
     def update(self, *, F):
         """Updates the states in the next step.
@@ -46,7 +45,7 @@ class PDE(MCS):
         """
         config = self.f[self.step]
         self.step += 1
-        self.f[self.step] = config + F(config)*self.dt
+        self.f[self.step] = config + F(config) * self.dt
 
     @staticmethod
     def turing(a, b, c, d, h, k, Du, Dv, dh):
@@ -56,13 +55,15 @@ class PDE(MCS):
             \partial u/\partial t = a(u-h) + b(v-k) + D_u \Delta u \\
             \partial v/\partial t = c(u-h) + d(v-k) + D_v \Delta v.
         """
+
         def dfdt(config):
             lap = PDE._laplacian(config, dh)
             u, v = np.moveaxis(config, -1, 0)
             delta_u, delta_v = np.moveaxis(lap, -1, 0)
-            du = (a*(u-h) + b*(v-k) + Du*delta_u)
-            dv = (c*(u-h) + d*(v-k) + Dv*delta_v)
+            du = a * (u - h) + b * (v - k) + Du * delta_u
+            dv = c * (u - h) + d * (v - k) + Dv * delta_v
             return np.stack([du, dv], axis=2)
+
         return dfdt
 
     @staticmethod
@@ -72,7 +73,7 @@ class PDE(MCS):
         u_l = np.roll(u, 1, axis=1)
         u_u = np.roll(u, -1, axis=0)
         u_d = np.roll(u, 1, axis=0)
-        return (u_r+u_l+u_u+u_d-4*u) / (dh**2)
+        return (u_r + u_l + u_u + u_d - 4 * u) / (dh**2)
 
     def visualize(self, *, step=-1, indices=None):
         """Visualizes the states of the system using heatmap.

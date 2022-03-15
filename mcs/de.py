@@ -13,6 +13,7 @@ class DE(MCS):
         x: An array representing the states of shape (max_step, dim).
         step: The current step.
     """
+
     def __init__(self, max_step, dim):
         super().__init__(max_step)
         self.dim = dim

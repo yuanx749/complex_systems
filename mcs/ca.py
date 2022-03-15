@@ -20,6 +20,7 @@ class CA(MCS):
         representing the states.
         step: The current step.
     """
+
     def __init__(self, max_step, size_x, size_y=1, seed=42):
         super().__init__(max_step)
         self.size_x = size_x
@@ -52,7 +53,7 @@ class CA(MCS):
         config_next = np.zeros(size)
         neighborhoods = set([(1, 1, 1), (1, 0, 1), (1, 0, 0), (0, 1, 1)])
         for x in range(size):
-            pattern = (config[(x-1) % size], config[x], config[(x+1) % size])
+            pattern = (config[(x - 1) % size], config[x], config[(x + 1) % size])
             if pattern in neighborhoods:
                 config_next[x] = 1
         return config_next
@@ -61,8 +62,7 @@ class CA(MCS):
     def game_of_life(config):
         assert config.ndim == 2
         config_next = np.copy(config)
-        num_alive = signal.convolve2d(
-            config, np.ones((3, 3)), mode='same', boundary='wrap')
+        num_alive = signal.convolve2d(config, np.ones((3, 3)), mode="same", boundary="wrap")
         config_next[(config == 0) & (num_alive == 3)] = 1
         config_next[(config == 1) & ((num_alive < 3) | (num_alive > 4))] = 0
         return config_next
