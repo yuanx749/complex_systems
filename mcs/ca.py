@@ -8,16 +8,14 @@ from .mcs import MCS
 class CA(MCS):
     """Cellular automata simulation.
 
-    Override this class to customize conﬁguration and
-    state-transition function.
+    Override this class to customize conﬁguration and state-transition function.
 
     Attributes:
         max_step: The max step.
         size_x: Number of cells in x dimension.
         size_y: Number of cells in y dimension.
         seed: NumPy random seed.
-        s: An array of shape (max_step, size_x) or (max_step, size_y, size_x)
-        representing the states.
+        s: An array of shape (max_step, size_x) or (max_step, size_y, size_x) representing the states.
         step: The current step.
     """
 
@@ -68,8 +66,7 @@ class CA(MCS):
         return config_next
 
     def visualize(self, *, step=-1):
-        """Visualizes the states of the system using an image of
-        shape (step, size_x) or (size_y, size_x).
+        """Visualizes the states of the system using an image of shape (step, size_x) or (size_y, size_x).
 
         Args:
             step: The step to plot.

@@ -15,8 +15,7 @@ class PDE(MCS):
         dt: The time step.
         dh: Spatial resolution.
         size: Size of grid.
-        f: An array of shape (max_step, size, size, dim) representing the
-        states.
+        f: An array of shape (max_step, size, size, dim) representing the states.
         step: The current step.
     """
 
@@ -30,7 +29,7 @@ class PDE(MCS):
 
     def initialize(self):
         """Sets up the initial conditions."""
-        x = y = np.arange(0, self.dh * self.size, self.dh)
+        x = y = np.arange(0, self.dh * (self.size + 1), self.dh)
         self.xv, self.yv = np.meshgrid(x, y)
         np.random.seed(42)
         self.f[0, ..., 0] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
@@ -40,8 +39,7 @@ class PDE(MCS):
         """Updates the states in the next step.
 
         Args:
-            F: A state transition function corresponding to
-            df/dt = F(f,...,x,y,t).
+            F: A state transition function corresponding to df/dt = F(f,...,x,y,t).
         """
         config = self.f[self.step]
         self.step += 1
@@ -89,7 +87,8 @@ class PDE(MCS):
         indices = np.arange(self.dim) if indices is None else indices
         for state in indices:
             fig, ax = plt.subplots()
-            ax.imshow(self.f[step, ..., state], vmin=0, vmax=2)
-            ax.set_axis_off()
+            pcm = ax.pcolormesh(self.xv, self.yv, self.f[step, ..., state], vmin=0, vmax=2)
+            ax.set_aspect("equal")
+            fig.colorbar(pcm, ax=ax)
             figs.append(fig)
         return figs

@@ -145,7 +145,7 @@ def turing():
         model = st.session_state["pde"]
         step = st.slider("Step", min_value=0, max_value=max_step, value=max_step)
         figs = model.visualize(step=step)
-        (ax,) = figs[0].axes
+        ax, _ = figs[0].axes
         ax.set(title=r"Density of $u$")
         st.pyplot(figs[0])
 
