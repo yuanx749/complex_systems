@@ -15,15 +15,15 @@ class MCS(ABC):
         self.step = 0
 
     @abstractmethod
-    def initialize(self, **kwargs):
+    def initialize(self):
         pass
 
     @abstractmethod
-    def update(self, **kwargs):
+    def update(self):
         pass
 
     @abstractmethod
-    def visualize(self, **kwargs):
+    def visualize(self):
         pass
 
     def simulate(self, stop_step=None, **kwargs):

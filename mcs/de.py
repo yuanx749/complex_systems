@@ -19,15 +19,18 @@ class DE(MCS):
         self.dim = dim
         self.x = np.zeros((max_step, dim))
 
-    def initialize(self, *, x0):
+    def initialize(self, *, x0=None):
         """Sets up the initial values for the state variables.
 
         Args:
             x0: A list of initial states.
         """
+        if x0 is None:
+            x0 = [0] * len(self.dim)
+        assert len(x0) == self.dim
         self.x[0] = x0
 
-    def update(self, *, f):
+    def update(self, *, f=lambda x: x):
         """Updates the states in the next step.
 
         Args:

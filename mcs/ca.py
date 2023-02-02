@@ -34,7 +34,7 @@ class CA(MCS):
         np.random.seed(self.seed)
         self.s[0] = np.random.randint(2, size=self.s[0].shape)
 
-    def update(self, *, F):
+    def update(self, *, F=lambda x: x):
         """Updates the states in the next step.
 
         Args:

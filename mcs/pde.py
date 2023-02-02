@@ -35,7 +35,7 @@ class PDE(MCS):
         self.f[0, ..., 0] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
         self.f[0, ..., 1] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
 
-    def update(self, *, F):
+    def update(self, *, F=lambda x: x):
         """Updates the states in the next step.
 
         Args:

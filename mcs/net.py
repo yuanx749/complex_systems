@@ -41,7 +41,7 @@ class Net(MCS):
         g_next = g.copy()
         for i in g.nodes:
             theta_i = g.nodes[i]["state"]
-            sum_ni = sum([g.nodes[j]["state"] - theta_i for j in g.neighbors(i)])
+            sum_ni = sum(g.nodes[j]["state"] - theta_i for j in g.neighbors(i))
             g_next.nodes[i]["state"] = theta_i + (b * theta_i + a * sum_ni) * dt
         self.graphs.append(g_next)
         self.step += 1
