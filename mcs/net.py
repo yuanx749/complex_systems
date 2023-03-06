@@ -1,8 +1,4 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import networkx as nx
-
-from .mcs import MCS
+from .mcs import *
 
 
 class Net(MCS):
@@ -12,10 +8,11 @@ class Net(MCS):
 
     Attributes:
         max_step: The max step.
-        graphs: A list of networkx.Graph objects.
+        graphs: A list of `networkx.Graph` objects.
+        step: The current step.
     """
 
-    def __init__(self, max_step):
+    def __init__(self, max_step: int):
         super().__init__(max_step)
         self.graphs = []
 
@@ -32,7 +29,7 @@ class Net(MCS):
         self.coupled_oscillators(**kwargs)
 
     def coupled_oscillators(self, a, b, dt):
-        """Linearly coupled dynamical nodes:
+        r"""Linearly coupled dynamical nodes:
 
         .. math::
             d\theta_i/dt = b\theta_i + a\sum_{j\in N_i}(\theta_j-\theta_i).
@@ -46,13 +43,13 @@ class Net(MCS):
         self.graphs.append(g_next)
         self.step += 1
 
-    def visualize(self, *, step=-1):
+    def visualize(self, *, step: int = -1):
         """Visualizes the states of the network.
 
         Args:
             step: The step to plot.
         Returns:
-            A matplotlib.figure.Figure object.
+            A `matplotlib.figure.Figure` object.
         """
         g = self.graphs[step]
         fig, ax = plt.subplots()

@@ -1,3 +1,6 @@
+# Demo
+
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,7 +29,7 @@ plt.show()
 
 
     
-![png](demo_files/demo_2_0.png)
+![png](demo_files/demo_3_0.png)
     
 
 
@@ -43,7 +46,7 @@ plt.show()
 
 
     
-![png](demo_files/demo_4_0.png)
+![png](demo_files/demo_5_0.png)
     
 
 
@@ -66,7 +69,7 @@ plt.show()
 
 
     
-![png](demo_files/demo_6_0.png)
+![png](demo_files/demo_7_0.png)
     
 
 
@@ -87,24 +90,12 @@ plt.show()
 
 
     
-![png](demo_files/demo_8_0.png)
+![png](demo_files/demo_9_0.png)
     
 
 
 
     
-![png](demo_files/demo_8_1.png)
+![png](demo_files/demo_9_1.png)
     
 
-
-<script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
-  }
-};
-</script>
-
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

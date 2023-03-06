@@ -1,7 +1,4 @@
-import numpy as np
-import matplotlib.pyplot as plt
-
-from .mcs import MCS
+from .mcs import *
 
 
 class PDE(MCS):
@@ -15,11 +12,11 @@ class PDE(MCS):
         dt: The time step.
         dh: Spatial resolution.
         size: Size of grid.
-        f: An array of shape (max_step, size, size, dim) representing the states.
+        f: An `~numpy.ndarray` of shape (max_step, size, size, dim) representing the states.
         step: The current step.
     """
 
-    def __init__(self, max_step, dim, dt, dh, size):
+    def __init__(self, max_step: int, dim: int, dt: float, dh: float, size: int):
         super().__init__(max_step)
         self.dim = dim
         self.dt = dt
@@ -35,22 +32,25 @@ class PDE(MCS):
         self.f[0, ..., 0] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
         self.f[0, ..., 1] = 1 + np.random.uniform(-0.01, 0.01, (self.size, self.size))
 
-    def update(self, *, F=lambda x: x):
-        """Updates the states in the next step.
+    def update(self, *, F: Callable = None):
+        r"""Updates the states in the next step.
 
         Args:
-            F: A state transition function corresponding to df/dt = F(f,...,x,y,t).
+            F: A state transition function corresponding to :math:`\partial f/\partial t = F(f,...,x,y,t)`.
         """
+        if F is None:
+            F = self._identity
         config = self.f[self.step]
         self.step += 1
         self.f[self.step] = config + F(config) * self.dt
 
     @staticmethod
     def turing(a, b, c, d, h, k, Du, Dv, dh):
-        """Reaction-diffusion equations:
+        r"""Reaction-diffusion equations:
 
         .. math::
-            \partial u/\partial t = a(u-h) + b(v-k) + D_u \Delta u \\
+            \partial u/\partial t = a(u-h) + b(v-k) + D_u \Delta u
+
             \partial v/\partial t = c(u-h) + d(v-k) + D_v \Delta v.
         """
 
@@ -73,15 +73,15 @@ class PDE(MCS):
         u_d = np.roll(u, 1, axis=0)
         return (u_r + u_l + u_u + u_d - 4 * u) / (dh**2)
 
-    def visualize(self, *, step=-1, indices=None):
+    def visualize(self, *, step: int = -1, indices: List[int] = None):
         """Visualizes the states of the system using heatmap.
 
         Args:
             step: The step to plot.
             indices: A list of indices of the states to plot.
-            If None, plot all states.
+                If `None`, plot all states.
         Returns:
-            A list of matplotlib.figure.Figure objects.
+            A list of `matplotlib.figure.Figure` objects.
         """
         figs = []
         indices = np.arange(self.dim) if indices is None else indices

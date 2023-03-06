@@ -13,19 +13,19 @@ Modeling and simulation of complex systems:
 - PDE
 - Dynamical network
 
-## demo
+## Demo
 
 Navigate to [Streamlit](https://share.streamlit.io/yuanx749/complex_systems/main/demo_st.py) to play with a demo.
 
-Alternatively, see [demo.md](demo.md) or run `jupyter notebook demo.ipynb`.
+Alternatively, see this [notebook](demo/demo.md) or run `jupyter notebook demo/demo.ipynb`.
 
-## install
+## Install
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Alternatively, using `setuptools`, run in the cloned directory:
+Alternatively on Windows, using `setuptools`, run in the cloned directory:
 
 ```bash
 python -m pip install --upgrade pip

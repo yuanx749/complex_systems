@@ -1,8 +1,4 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy import signal
-
-from .mcs import MCS
+from .mcs import *
 
 
 class CA(MCS):
@@ -15,11 +11,11 @@ class CA(MCS):
         size_x: Number of cells in x dimension.
         size_y: Number of cells in y dimension.
         seed: NumPy random seed.
-        s: An array of shape (max_step, size_x) or (max_step, size_y, size_x) representing the states.
+        s: An `~numpy.ndarray` of shape (max_step, size_x) or (max_step, size_y, size_x) representing the states.
         step: The current step.
     """
 
-    def __init__(self, max_step, size_x, size_y=1, seed=42):
+    def __init__(self, max_step: int, size_x: int, size_y: int = 1, seed: int = 42):
         super().__init__(max_step)
         self.size_x = size_x
         self.size_y = size_y
@@ -34,12 +30,14 @@ class CA(MCS):
         np.random.seed(self.seed)
         self.s[0] = np.random.randint(2, size=self.s[0].shape)
 
-    def update(self, *, F=lambda x: x):
+    def update(self, *, F: Callable = None):
         """Updates the states in the next step.
 
         Args:
-            F: A state transition function which returns an array.
+            F: A state transition function which returns an `~numpy.ndarray`.
         """
+        if F is None:
+            F = self._identity
         config = self.s[self.step]
         self.step += 1
         self.s[self.step] = F(config)
@@ -65,13 +63,13 @@ class CA(MCS):
         config_next[(config == 1) & ((num_alive < 3) | (num_alive > 4))] = 0
         return config_next
 
-    def visualize(self, *, step=-1):
+    def visualize(self, *, step: int = -1):
         """Visualizes the states of the system using an image of shape (step, size_x) or (size_y, size_x).
 
         Args:
             step: The step to plot.
         Returns:
-            A matplotlib.figure.Figure object.
+            A `matplotlib.figure.Figure` object.
         """
         fig, ax = plt.subplots()
         if self.s.ndim == 2:
