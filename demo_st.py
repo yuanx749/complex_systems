@@ -3,10 +3,6 @@ import streamlit as st
 from mcs import CA, ODE, PDE, Net
 
 
-class Args:
-    ...
-
-
 def intro():
     st.header("Modeling and simulation of complex systems")
     st.markdown(":point_left: Please select a model on the left.")
@@ -22,33 +18,33 @@ def ode_demo():
         """
     )
 
-    @st.cache
-    def simulate():
-        ode = ODE(**args_ode.__dict__)
+    @st.cache_data
+    def simulate(args_ode, args_lv):
+        ode = ODE(**args_ode)
         ode.initialize(x0=x0)
-        ode.simulate(f=ode.lv(**args_lv.__dict__))
+        ode.simulate(f=ode.lv(**args_lv))
         return ode
 
     with st.form("parameters"):
-        args_lv = Args()
-        args_ode = Args()
+        args_lv = {}
+        args_ode = {}
 
         st.text("Parameters: ")
         col1, col2 = st.columns(2)
-        args_lv.a = col1.number_input("a", min_value=0.01, value=1.1)
-        args_lv.b = col2.number_input("b", min_value=0.01, value=0.4)
-        args_lv.c = col1.number_input("c", min_value=0.01, value=0.4)
-        args_lv.d = col2.number_input("d", min_value=0.01, value=0.1)
+        args_lv["a"] = col1.number_input("a", min_value=0.01, value=1.1)
+        args_lv["b"] = col2.number_input("b", min_value=0.01, value=0.4)
+        args_lv["c"] = col1.number_input("c", min_value=0.01, value=0.4)
+        args_lv["d"] = col2.number_input("d", min_value=0.01, value=0.1)
 
         st.text("Simulation: ")
         col3, col4 = st.columns(2)
-        args_ode.max_step = col3.number_input("Max step", min_value=1, value=10000)
-        args_ode.dt = col4.number_input("Step size for time", min_value=0.001, value=0.01, step=0.001, format="%.3f")
+        args_ode["max_step"] = col3.number_input("Max step", min_value=1, value=10000)
+        args_ode["dt"] = col4.number_input("Step size for time", min_value=0.001, value=0.01, step=0.001, format="%.3f")
 
-        args_ode.dim = 2
+        args_ode["dim"] = 2
         x0 = (10, 10)
         if st.form_submit_button("Submit"):
-            st.session_state["ode"] = simulate()
+            st.session_state["ode"] = simulate(args_ode, args_lv)
 
     if "ode" in st.session_state:
         model = st.session_state["ode"]
@@ -67,8 +63,8 @@ def game_of_life():
     st.subheader("Game of life")
     st.markdown("Conway's Game of Life.")
 
-    @st.cache
-    def simulate():
+    @st.cache_data
+    def simulate(max_step, x, y):
         ca = CA(max_step=max_step, size_x=x, size_y=y)
         ca.initialize()
         ca.simulate(F=ca.game_of_life)
@@ -83,7 +79,7 @@ def game_of_life():
         max_step = st.number_input("Max step", min_value=1, value=100)
 
         if st.form_submit_button("Submit"):
-            st.session_state["ca"] = simulate()
+            st.session_state["ca"] = simulate(max_step, x, y)
 
     if "ca" in st.session_state:
         max_step_ = max_step - 1
@@ -107,41 +103,41 @@ def turing():
         """
     )
 
-    @st.cache
-    def simulate():
-        pde = PDE(**args_pde.__dict__)
+    @st.cache_data
+    def simulate(args_pde, args_turing):
+        pde = PDE(**args_pde)
         pde.initialize()
-        pde.simulate(F=pde.turing(**args_turing.__dict__))
+        pde.simulate(F=pde.turing(**args_turing))
         return pde
 
     with st.form("parameters"):
-        args_turing = Args()
-        args_pde = Args()
+        args_turing = {}
+        args_pde = {}
 
         st.text("Parameters: ")
         col1, col2 = st.columns(2)
-        args_turing.a = col1.number_input("a", value=1.0)
-        args_turing.b = col2.number_input("b", value=-1.0)
-        args_turing.c = col1.number_input("c", value=2.0)
-        args_turing.d = col2.number_input("d", value=-1.5)
-        args_turing.h = col1.number_input("h", value=1.0)
-        args_turing.k = col2.number_input("k", value=1.0)
-        args_turing.Du = col1.number_input("Du", min_value=1e-5, value=1e-4, step=1e-5, format="%.5f")
-        args_turing.Dv = col2.number_input("Dv", min_value=1e-5, value=6e-4, step=1e-5, format="%.5f")
+        args_turing["a"] = col1.number_input("a", value=1.0)
+        args_turing["b"] = col2.number_input("b", value=-1.0)
+        args_turing["c"] = col1.number_input("c", value=2.0)
+        args_turing["d"] = col2.number_input("d", value=-1.5)
+        args_turing["h"] = col1.number_input("h", value=1.0)
+        args_turing["k"] = col2.number_input("k", value=1.0)
+        args_turing["Du"] = col1.number_input("Du", min_value=1e-5, value=1e-4, step=1e-5, format="%.5f")
+        args_turing["Dv"] = col2.number_input("Dv", min_value=1e-5, value=6e-4, step=1e-5, format="%.5f")
 
         st.text("Simulation: ")
         col3, col4 = st.columns(2)
-        args_pde.max_step = col3.number_input("Max step", min_value=1, value=2500)
-        args_pde.dt = col4.number_input("Step size for time", min_value=0.001, value=0.02, step=0.001, format="%.3f")
-        args_turing.dh = args_pde.dh = col3.number_input("Spatial resolution", min_value=0.01, value=0.01)
-        args_pde.size = col4.number_input("Grid size", min_value=1, value=100)
-        args_pde.dim = 2
+        args_pde["max_step"] = col3.number_input("Max step", min_value=1, value=2500)
+        args_pde["dt"] = col4.number_input("Step size for time", min_value=0.001, value=0.02, step=0.001, format="%.3f")
+        args_turing["dh"] = args_pde["dh"] = col3.number_input("Spatial resolution", min_value=0.01, value=0.01)
+        args_pde["size"] = col4.number_input("Grid size", min_value=1, value=100)
+        args_pde["dim"] = 2
 
         if st.form_submit_button("Submit"):
-            st.session_state["pde"] = simulate()
+            st.session_state["pde"] = simulate(args_pde, args_turing)
 
     if "pde" in st.session_state:
-        max_step = args_pde.max_step - 1
+        max_step = args_pde["max_step"] - 1
         model = st.session_state["pde"]
         step = st.slider("Step", min_value=0, max_value=max_step, value=max_step)
         figs = model.visualize(step=step)
@@ -165,28 +161,28 @@ def oscillator():
         """
     )
 
-    @st.cache(allow_output_mutation=True)
-    def simulate():
+    @st.cache_data
+    def simulate(max_step, args_sync):
         net = Net(max_step=max_step)
         net.initialize()
-        net.simulate(**args_sync.__dict__)
+        net.simulate(**args_sync)
         return net
 
     with st.form("parameters"):
-        args_sync = Args()
+        args_sync = {}
 
         st.text("Parameters: ")
         col1, col2 = st.columns(2)
-        args_sync.a = col1.number_input("a", min_value=0.1, value=2.0)
-        args_sync.b = col2.number_input("b", min_value=0.1, value=0.9)
+        args_sync["a"] = col1.number_input("a", min_value=0.1, value=2.0)
+        args_sync["b"] = col2.number_input("b", min_value=0.1, value=0.9)
 
         st.text("Simulation: ")
         col3, col4 = st.columns(2)
         max_step = col3.number_input("Max step", min_value=1, value=2000)
-        args_sync.dt = col4.number_input("Step size for time", min_value=0.001, value=0.01, step=0.001, format="%.3f")
+        args_sync["dt"] = col4.number_input("Step size for time", min_value=0.001, value=0.01, step=0.001, format="%.3f")
 
         if st.form_submit_button("Submit"):
-            st.session_state["net"] = simulate()
+            st.session_state["net"] = simulate(max_step, args_sync)
 
     if "net" in st.session_state:
         max_step_ = max_step - 1
