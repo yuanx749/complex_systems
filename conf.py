@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath("."))
 
 project = "Modeling Complex Systems"
 copyright = "2021, yuanx749"
@@ -21,7 +21,6 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", ".venv"]
 default_role = "obj"
 
 html_theme = "furo"
-html_static_path = ["_static"]
 html_title = project
 
 autodoc_default_options = {
